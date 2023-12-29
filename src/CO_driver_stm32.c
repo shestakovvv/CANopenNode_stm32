@@ -251,7 +251,7 @@ CO_CANtxBufferInit(CO_CANmodule_t* CANmodule, uint16_t index, uint16_t ident, bo
  * \param[in]       CANmodule: CAN module instance
  * \param[in]       buffer: Pointer to buffer to transmit
  */
-uint32_t prev_time = 0;
+uint32_t retry_count = 0;
 
 static uint8_t
 prv_send_can_message(CO_CANmodule_t* CANmodule, CO_CANtx_t* buffer) {
@@ -316,12 +316,11 @@ prv_send_can_message(CO_CANmodule_t* CANmodule, CO_CANtx_t* buffer) {
     static CAN_TxHeaderTypeDef tx_hdr;
     /* Check if TX FIFO is ready to accept more messages */
 
-        uint32_t current_time = HAL_GetTick();
+        retry_count = 0;
         while (HAL_CAN_GetTxMailboxesFreeLevel(((CANopenNodeHandle*)CANmodule->CANptr)->CANHandle) <= 0) {
-                if (current_time - prev_time > CO_CAN_MAX_DELAY)
-                        return 0;
+                if (retry_count++ > CO_CAN_MAX_RETRY)
+                        return success;
         }
-        prev_time = current_time;
 
         /*
                  * RTR flag is part of identifier value

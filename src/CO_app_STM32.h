@@ -22,8 +22,8 @@
 extern "C" {
 #endif
 
-#ifndef CO_CAN_MAX_DELAY
-#define CO_CAN_MAX_DELAY 50
+#ifndef CO_CAN_MAX_RETRY
+#define CO_CAN_MAX_RETRY 50
 #endif
 
 typedef struct {
