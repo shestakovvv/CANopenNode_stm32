@@ -22,6 +22,10 @@
 extern "C" {
 #endif
 
+#ifndef CO_CAN_MAX_DELAY
+#define CO_CAN_MAX_DELAY 50
+#endif
+
 typedef struct {
         /*This is the Node ID that you ask the CANOpen stack to assign
          * to your device, although it might not always

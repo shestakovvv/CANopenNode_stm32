@@ -251,6 +251,8 @@ CO_CANtxBufferInit(CO_CANmodule_t* CANmodule, uint16_t index, uint16_t ident, bo
  * \param[in]       CANmodule: CAN module instance
  * \param[in]       buffer: Pointer to buffer to transmit
  */
+uint32_t prev_time = 0;
+
 static uint8_t
 prv_send_can_message(CO_CANmodule_t* CANmodule, CO_CANtx_t* buffer) {
 
@@ -313,11 +315,18 @@ prv_send_can_message(CO_CANmodule_t* CANmodule, CO_CANtx_t* buffer) {
 #else
     static CAN_TxHeaderTypeDef tx_hdr;
     /* Check if TX FIFO is ready to accept more messages */
-    if (HAL_CAN_GetTxMailboxesFreeLevel(((CANopenNodeHandle*)CANmodule->CANptr)->CANHandle) > 0) {
+
+        uint32_t current_time = HAL_GetTick();
+        while (HAL_CAN_GetTxMailboxesFreeLevel(((CANopenNodeHandle*)CANmodule->CANptr)->CANHandle) <= 0) {
+                if (current_time - prev_time > CO_CAN_MAX_DELAY)
+                        return 0;
+        }
+        prev_time = current_time;
+
         /*
-    		 * RTR flag is part of identifier value
-    		 * hence it needs to be properly decoded
-    		 */
+                 * RTR flag is part of identifier value
+                 * hence it needs to be properly decoded
+                 */
         tx_hdr.ExtId = 0u;
         tx_hdr.IDE = CAN_ID_STD;
         tx_hdr.DLC = buffer->DLC;
@@ -330,7 +339,6 @@ prv_send_can_message(CO_CANmodule_t* CANmodule, CO_CANtx_t* buffer) {
         success = HAL_CAN_AddTxMessage(((CANopenNodeHandle*)CANmodule->CANptr)->CANHandle, &tx_hdr, buffer->data,
                                        &TxMailboxNum)
                   == HAL_OK;
-    }
 #endif
     return success;
 }
