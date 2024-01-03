@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 #ifndef CO_CAN_MAX_RETRY
-#define CO_CAN_MAX_RETRY 50
+#define CO_CAN_MAX_RETRY 15000
 #endif
 
 typedef struct {
