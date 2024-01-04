@@ -18,7 +18,7 @@ extern "C" {
 #define CO_SWAP_64(x) x
 
 /* Needed for library */
-typedef uint_fast8_t bool_t;
+typedef bool bool_t;
 typedef float float32_t;
 typedef double float64_t;
 
