@@ -113,7 +113,7 @@ CO_CANmodule_init(CO_CANmodule_t* CANmodule, void* CANptr, CO_CANrx_t rxArray[],
     /***************************************/
     /* STM32 related configuration */
     /***************************************/
-    ((CANopenNodeHandle*)CANptr)->HWInitFunction();
+    ((CANopenNodeHandle*)CANptr)->CANInitFunction();
 
     /*
      * Configure global filter that is used as last check if message did not pass any of other filters:

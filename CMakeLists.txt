@@ -30,6 +30,11 @@ set(CAN_OPEN_NODE_SOURCES
 set(CAN_OPEN_NODE_INCLUDES
         ${STM32_NODE_PATH}
         ${MAIN_NODE_PATH}
+        ${MAIN_NODE_PATH}/301
+        ${MAIN_NODE_PATH}/303
+        ${MAIN_NODE_PATH}/304
+        ${MAIN_NODE_PATH}/305
+        ${MAIN_NODE_PATH}/309
 
         PARENT_SCOPE
 )
