@@ -3,11 +3,11 @@ set(STM32_NODE_PATH ${CMAKE_CURRENT_LIST_DIR}/src)
 
 set(CAN_OPEN_NODE_SOURCES
         ${STM32_NODE_PATH}/CO_app_STM32.c
-        ${STM32_NODE_PATH}/CO_driver_STM32.c
+        ${STM32_NODE_PATH}/CO_driver_stm32.c
 
         ${MAIN_NODE_PATH}/CANopen.c
         ${MAIN_NODE_PATH}/301/CO_PDO.c
-        ${MAIN_NODE_PATH}/301/CO_ODInterface.c
+        ${MAIN_NODE_PATH}/301/CO_ODinterface.c
         ${MAIN_NODE_PATH}/301/CO_Emergency.c
         ${MAIN_NODE_PATH}/301/CO_NMT_Heartbeat.c
         ${MAIN_NODE_PATH}/301/CO_SDOclient.c
