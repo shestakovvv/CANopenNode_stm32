@@ -70,6 +70,11 @@ void CANopenNode_Process(CANopenNodeHandle *hCANopenHandle);
 void CANopenNode_IRQ(CANopenNodeHandle *canopenSTM32);
 
 
+static inline bool CANopenNode_is_operational(CANopenNodeHandle *self) {
+        return (self->canOpen_Obj->NMT->operatingState == CO_NMT_OPERATIONAL);
+}
+
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
