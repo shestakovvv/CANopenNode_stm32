@@ -327,7 +327,11 @@ CANopenNode_IRQ(CANopenNodeHandle *hCANopenHandle) {
             hCANopenHandle->canOpen_Obj->CANmodule->CANnormal) {
                 bool_t syncWas = false;
                 /* get time difference since last function call */
+                #if BOARD_TYPE==CENTRAL_BOARD
+                uint32_t timeDifference_us = 10000; // 1ms second
+                #else
                 uint32_t timeDifference_us = 1000; // 1ms second
+                #endif
 
 #if (CO_CONFIG_SYNC) & CO_CONFIG_SYNC_ENABLE
                 syncWas = CO_process_SYNC(hCANopenHandle->canOpen_Obj,
