@@ -396,7 +396,12 @@ void HAL_CAN_TxMailbox2CompleteCallback(CAN_HandleTypeDef *hcan){
 #endif
 }
 
+uint32_t can_timeInterruptPoint=0;
+
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
+//Watchdog protection
+        can_timeInterruptPoint = HAL_GetTick();
+//Watchdog protection
         #ifdef CO_MULTIPLE_OD
         for (uint8_t i=0; i<CO_OD_COUNT; i++) {
                 if (hcan == hCANopenNode_List[i]->CANHandle) {
@@ -410,6 +415,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
 }
 
 void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan){
+//Watchdog protection
+        can_timeInterruptPoint = HAL_GetTick();
+//Watchdog protection
         #ifdef CO_MULTIPLE_OD
         for (uint8_t i=0; i<CO_OD_COUNT; i++) {
                 if (hcan == hCANopenNode_List[i]->CANHandle) {
